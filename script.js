@@ -8,9 +8,15 @@ const backgroundImages = [
 
 let currentImageIndex = 0;
 
+// TIMING CONFIGURATION - Adjust these numbers:
+const FADE_OUT_DURATION = 1000;      // How long fade out takes (milliseconds) - INCREASE for slower fade
+const IMAGE_DISPLAY_TIME = 12000;    // How long each image stays visible (milliseconds) - INCREASE to keep image longer
+const FADE_IN_DURATION = 1000;       // How long fade in takes (milliseconds) - INCREASE for slower fade
+
 function changeBackground() {
     // Fade out effect
-    document.body.style.opacity = "0.7";
+    document.body.style.transition = `opacity ${FADE_OUT_DURATION}ms ease-in-out`;
+    document.body.style.opacity = "0.6";
     
     // Wait for fade effect, then change image
     setTimeout(() => {
@@ -18,12 +24,14 @@ function changeBackground() {
         currentImageIndex = (currentImageIndex + 1) % backgroundImages.length;
         
         // Fade back in
+        document.body.style.transition = `opacity ${FADE_IN_DURATION}ms ease-in-out`;
         document.body.style.opacity = "1";
-    }, 800);
+    }, FADE_OUT_DURATION);
 }
 
-// Change background every 8 seconds (giving time for smooth transition)
-setInterval(changeBackground, 8000);
+// Total cycle time = FADE_OUT + IMAGE_DISPLAY + FADE_IN
+// Currently: 1000 + 12000 + 1000 = 14 seconds per image
+setInterval(changeBackground, FADE_OUT_DURATION + IMAGE_DISPLAY_TIME + FADE_IN_DURATION);
 
 // Set initial background
 changeBackground();
