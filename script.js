@@ -1,4 +1,4 @@
-// Background Slideshow
+// Background Slideshow with smooth fade effect
 const backgroundImages = [
     "images/monster-gojo.jpg",
     "images/monster-original.jpg",
@@ -9,12 +9,21 @@ const backgroundImages = [
 let currentImageIndex = 0;
 
 function changeBackground() {
-    document.body.style.backgroundImage = `url('${backgroundImages[currentImageIndex]}')`;
-    currentImageIndex = (currentImageIndex + 1) % backgroundImages.length;
+    // Fade out effect
+    document.body.style.opacity = "0.7";
+    
+    // Wait for fade effect, then change image
+    setTimeout(() => {
+        document.body.style.backgroundImage = `url('${backgroundImages[currentImageIndex]}')`;
+        currentImageIndex = (currentImageIndex + 1) % backgroundImages.length;
+        
+        // Fade back in
+        document.body.style.opacity = "1";
+    }, 800);
 }
 
-// Change background every 5 seconds
-setInterval(changeBackground, 5000);
+// Change background every 8 seconds (giving time for smooth transition)
+setInterval(changeBackground, 8000);
 
 // Set initial background
 changeBackground();
